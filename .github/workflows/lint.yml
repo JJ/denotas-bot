@@ -1,0 +1,18 @@
+name: lint deno
+on: [push, pull_request]
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Versión de trabajo de deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.30
+      - name: Fuentes
+        uses: actions/checkout@v3
+      - name: Check
+        run: deno compile *.ts
+      - name: Lint
+        run: deno lint *.ts
+      - name: test
+        run: deno test
