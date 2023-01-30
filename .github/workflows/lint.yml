@@ -1,5 +1,11 @@
 name: lint deno
-on: [push, pull_request]
+on:
+  push:
+    path:
+      - "**/*.ts"
+      - "deno.*"
+      - "data/*.csv"
+  pull_request:
 jobs:
   linting:
     runs-on: ubuntu-latest
@@ -15,4 +21,4 @@ jobs:
       - name: Lint
         run: deno lint *.ts
       - name: test
-        run: deno test
+        run: deno test --allow-read
