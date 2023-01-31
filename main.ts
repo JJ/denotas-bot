@@ -1,8 +1,23 @@
-export function add(a: number, b: number): number {
-  return a + b;
-}
+import {
+  TelegramBot,
+  UpdateType,
+} from "https://deno.land/x/telegram_bot_api/mod.ts";
 
-// Learn more at https://deno.land/manual/examples/module_metadata#concepts
-if (import.meta.main) {
-  console.log("Add 2 + 3 =", add(2, 3));
-}
+import { Notas } from "./src/notas.ts";
+
+const TOKEN = Deno.env.get("DENOTASBOT_TOKEN");
+if (!TOKEN) throw new Error("Bot token is not provided");
+const bot = new TelegramBot(TOKEN);
+const notas = new Notas("data/notas-iv-22-23-ordinaria.csv");
+await notas.setup();
+bot.on(UpdateType.Message, async ({ message }) => {
+  console.log(message);
+  await bot.sendMessage({
+    chat_id: message.chat.id,
+    text: notas.notas.get("foo")?.notaFinal,
+  });
+});
+
+bot.run({
+  polling: true,
+});

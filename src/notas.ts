@@ -26,12 +26,14 @@ export class Notas {
 
   async setup() {
     const notas = await Deno.open(this.fileName);
-    for await (const row of readCSV(notas)) {
+    for await (const row of readCSV(notas, { lineSeparator: "\r\n" })) {
       const cells = [];
       for await (const cell of row) cells.push(cell);
       if (cells.length === 0) continue;
-      const nick: string = cells.pop() as string;
-      const estasNotas = cells.map((nota) => parseInt(nota));
+      const nick: string = cells.shift() as string;
+      const estasNotas = cells
+        .map((conComa) => conComa.replace(",", "."))
+        .map((nota) => parseFloat(nota) || 0);
       const estudiante = new Estudiante(
         estasNotas[0],
         estasNotas[1],
