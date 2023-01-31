@@ -1,7 +1,7 @@
 class Estudiante {
   notaProyecto: number;
-  notaExtra: number;
   notaPresentacion: number;
+  notaExtra: number;
   notaFinal: number;
   constructor(
     notaProyecto: number,
