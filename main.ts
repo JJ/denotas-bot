@@ -13,10 +13,10 @@ await notas.setup();
 bot.on(UpdateType.Message, async ({ message }) => {
   console.log(message);
   const nick = message.from?.username?.toLowerCase();
-  const estasNotas = notas.notas.get(nick);
+  const estasNotas = notas.notas.get(nick as string);
   await bot.sendMessage({
     chat_id: message.chat.id,
-    text: `Nota de ${nick}\nProyecto: ${estasNotas?.notaProyecto}\nFinal: ${estasNotas?.notaFinal}`,
+    text: `🧑‍🏫 Nota de ${nick}\n❧Proyecto: ${estasNotas?.notaProyecto}\n❧Extra: ${estasNotas?.notaExtra}\n❧Presentación: ${estasNotas?.notaPresentacion}\n❧Final: ${estasNotas?.notaFinal}`,
   });
 });
 
