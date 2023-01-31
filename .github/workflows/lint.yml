@@ -16,9 +16,7 @@ jobs:
           deno-version: v1.30
       - name: Fuentes
         uses: actions/checkout@v3
-      - name: Check
-        run: deno compile *.ts
       - name: Lint
-        run: deno lint *.ts
+        run: deno task lint
       - name: test
         run: deno task test
