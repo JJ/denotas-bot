@@ -17,6 +17,6 @@ jobs:
       - name: Fuentes
         uses: actions/checkout@v3
       - name: Lint
-        run: deno task lint
+        run: deno lint
       - name: test
         run: deno task test
