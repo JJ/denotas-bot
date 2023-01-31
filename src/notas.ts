@@ -40,7 +40,7 @@ export class Notas {
         estasNotas[2],
         estasNotas[3]
       );
-      this.notas.set(nick, estudiante);
+      this.notas.set(nick.toLowerCase(), estudiante);
     }
     notas.close();
   }
