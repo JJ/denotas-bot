@@ -14,9 +14,21 @@ bot.on(UpdateType.Message, async ({ message }) => {
   console.log(message);
   const nick: string = message.from?.username?.toLowerCase();
   const estasNotas = notas.notas.get(nick);
+  let mensaje: string;
+  if (estasNotas === undefined) {
+    mensaje =
+      `⚠️ Parece que no he encontrado tu nick _${nick}_ en la lista\n` +
+      "¿Es posible que te dieras de alta con otro?";
+  } else {
+    mensaje =
+      `🧑‍🏫 Nota de *${nick}*\n` +
+      `❧Proyecto: _${estasNotas?.notaProyecto}_\n❧Extra: _${estasNotas?.notaExtra}_\n` +
+      `❧Presentación: _${estasNotas?.notaPresentacion}_\n❧Final: *_||${estasNotas?.notaFinal}||_*`;
+  }
   await bot.sendMessage({
     chat_id: message.chat.id,
-    text: `🧑‍🏫 Nota de ${nick}\n❧Proyecto: ${estasNotas?.notaProyecto}\n❧Extra: ${estasNotas?.notaExtra}\n❧Presentación: ${estasNotas?.notaPresentacion}\n❧Final: ${estasNotas?.notaFinal}`,
+    parse_mode: "MarkdownV2",
+    text: mensaje,
   });
 });
 
