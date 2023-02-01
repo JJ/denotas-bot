@@ -4,9 +4,9 @@ class Estudiante {
   notaExtra: number;
   notaFinal: number;
   constructor(
-    notaProyecto: number,
-    notaExtra: number,
     notaPresentacion: number,
+    notaExtra: number,
+    notaProyecto: number,
     notaFinal: number
   ) {
     this.notaProyecto = notaProyecto;
