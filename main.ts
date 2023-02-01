@@ -22,8 +22,10 @@ bot.on(UpdateType.Message, async ({ message }) => {
   } else {
     mensaje =
       `🧑‍🏫 Nota de *${nick}*\n` +
-      `❧Proyecto: _${estasNotas?.notaProyecto}_\n❧Extra: _${estasNotas?.notaExtra}_\n` +
-      `❧Presentación: _${estasNotas?.notaPresentacion}_\n❧Final: *_||${estasNotas?.notaFinal}||_*`;
+      `❧Proyecto: _${escapeDot(estasNotas?.notaProyecto)}_\n` +
+      `❧Extra: _${escapeDot(estasNotas?.notaExtra)}_\n` +
+      `❧Presentación: _${escapeDot(estasNotas?.notaPresentacion)}` +
+      `_\n❧Final: *_||${escapeDot(estasNotas?.notaFinal)}||_*`;
   }
   await bot.sendMessage({
     chat_id: message.chat.id,
@@ -35,3 +37,7 @@ bot.on(UpdateType.Message, async ({ message }) => {
 bot.run({
   polling: true,
 });
+
+function escapeDot(nota) {
+  return (nota + "").replace(".", "'");
+}
