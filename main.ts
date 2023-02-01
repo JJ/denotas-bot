@@ -21,7 +21,7 @@ bot.on(UpdateType.Message, async ({ message }) => {
       "¿Es posible que te dieras de alta con otro?";
   } else {
     mensaje =
-      `🧑‍🏫 Nota de *${nick}*\n` +
+      `🧑‍🏫 Nota de *${escapeLodash(nick)}*\n` +
       `❧Proyecto: _${escapeDot(estasNotas?.notaProyecto)}_\n` +
       `❧Extra: _${escapeDot(estasNotas?.notaExtra)}_\n` +
       `❧Presentación: _${escapeDot(estasNotas?.notaPresentacion)}` +
@@ -40,4 +40,8 @@ bot.run({
 
 function escapeDot(nota) {
   return (nota + "").replace(".", "'");
+}
+
+function escapeLodash(nick) {
+  return nick.replace("_", "\_");
 }
