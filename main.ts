@@ -27,6 +27,7 @@ bot.on(UpdateType.Message, async ({ message }) => {
       `❧Presentación: _${escapeDot(estasNotas?.notaPresentacion)}` +
       `_\n❧Final: *_||${escapeDot(estasNotas?.notaFinal)}||_*`;
   }
+  console.warn(mensaje);
   await bot.sendMessage({
     chat_id: message.chat.id,
     parse_mode: "MarkdownV2",
@@ -43,5 +44,5 @@ function escapeDot(nota) {
 }
 
 function escapeLodash(nick) {
-  return nick.replace("_", "\_");
+  return nick.replace("_", "\\_");
 }
