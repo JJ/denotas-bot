@@ -2,6 +2,6 @@
   "tasks": {
     "dev": "deno run --watch main.ts",
     "test": "deno test --allow-read",
-    "start": "deno run --allow-net --allow-env --allow-read main.ts ../notas-iv-22-23-ordinaria.csv"
+    "start": "deno run --allow-net --allow-env --allow-read main.ts ../notas-iv-22-23-extraordinaria.csv"
   }
 }
