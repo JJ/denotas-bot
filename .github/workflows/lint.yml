@@ -1,7 +1,7 @@
 name: lint deno
 on:
   push:
-    path:
+    paths:
       - "**/*.ts"
       - "deno.*"
       - "data/*.csv"
