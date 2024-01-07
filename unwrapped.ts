@@ -61,10 +61,10 @@ bot.run({
   polling: true,
 });
 
-function escapeLodash(nick) {
+function escapeLodash(nick: string ) {
   return nick.replace("_", "\\_");
 }
 
-function escapeDot(nota) {
+function escapeDot(nota: string | number) {
   return (nota + "").replace(".", "'");
 }
