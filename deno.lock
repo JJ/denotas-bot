@@ -1,5 +1,10 @@
 {
-  "version": "2",
+  "version": "3",
+  "redirects": {
+    "https://deno.land/std/http/server.ts": "https://deno.land/std@0.175.0/http/server.ts",
+    "https://deno.land/x/csv/mod.ts": "https://deno.land/x/csv@v0.8.0/mod.ts",
+    "https://deno.land/x/telegram_bot_api/mod.ts": "https://deno.land/x/telegram_bot_api@0.4.0/mod.ts"
+  },
   "remote": {
     "https://deno.land/std@0.164.0/_util/asserts.ts": "d0844e9b62510f89ce1f9878b046f6a57bf88f208a10304aab50efcb48365272",
     "https://deno.land/std@0.164.0/bytes/bytes_list.ts": "aba5e2369e77d426b10af1de0dcc4531acecec27f9b9056f4f7bfbf8ac147ab4",
