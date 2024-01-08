@@ -7,11 +7,12 @@ const TOKEN = Deno.env.get("IV_UNWRAPPED_BOT_TOKEN");
 if (!TOKEN) throw new Error("Bot token is not provided");
 const bot = new TelegramBot(TOKEN);
 
+const reviews = JSON.parse( await Deno.readTextFile(Deno.args[0] || "../reviews.json"));
+
 const percentiles = JSON.parse( await Deno.readTextFile(Deno.args[0] || "../iv-percentiles.json"));
 
-const nicks =
-  await Deno.readTextFile(Deno.args[1] || "../equivalencia-telegram-github-23-24.csv")
-;
+const nicks = await Deno.readTextFile(Deno.args[1] || "../equivalencia-telegram-github-23-24.csv");
+
 
 const lines = nicks.split("\n");
 lines.shift();
@@ -34,7 +35,7 @@ bot.on(UpdateType.Message, async ({ message }) => {
         `⚠️ Parece que tu nick _${escapeLodash(nick)}_no corresponde a ninguno en GitHub\n`;
     } else {
       const estosDatos = percentiles[ githubNick ];
-
+      const reviewsEstudiante = reviews[ githubNick ];
       if (estosDatos === undefined) {
         mensaje =
         `⚠️ Parece que no he encontrado tu nick _${escapeLodash(nick)}_ en la lista\n` +
@@ -43,7 +44,8 @@ bot.on(UpdateType.Message, async ({ message }) => {
         mensaje =
           `🎓 *${escapeLodash(nick)}* ha alcanzado el objetivo ${estosDatos["objetivos"]}\n` +
           `como el *_${escapeDot(estosDatos["percentil"] * 100)}_* % de la clase\n` +
-          `y por tanto la nota por objetivos es ${escapeDot(estosDatos["nota"])} sobre 7\n`;
+          `y por tanto la nota por objetivos es ${escapeDot(estosDatos["nota"])} sobre 7\n` +
+          `también has hecho *${reviewsEstudiante}* reviews\n`;
       }
     }
   }
