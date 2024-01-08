@@ -18,34 +18,32 @@ lines.shift();
 const nickMap = new Map<string, string>();
 for (const line of lines) {
   const [_1, _2, github, telegram] = line.split(",");
-  if (telegram && github) nickMap.set(telegram, github);
+  if (telegram && github) nickMap.set(telegram.toLowerCase(), github);
 }
-
 bot.on(UpdateType.Message, async ({ message }) => {
   console.log(message);
   let mensaje: string;
-  const nick: string | undefined = message.from?.username?.toLowerCase();
+  let nick: string | undefined = message.from?.username?.toLowerCase();
   if ( nick === undefined ) {
-    mensaje =
-      `⚠️ Parece que no he encontrado tu nick _${nick}_ en la lista\n` +
-      "¿Es posible que te dieras de alta con otro?";
+    mensaje =      `⚠️ Parece que no tienes nick de Telegram\n`;
   } else {
+    nick = nick.toLowerCase();
     const githubNick = nickMap.get(nick);
     if ( githubNick === undefined ) {
       mensaje =
-        `⚠️ Parece que no he encontrado tu nick _${nick}_ en la lista\n` +
-        "¿Es posible que te dieras de alta con otro?";
+        `⚠️ Parece que tu nick _${nick}_no corresponde a ninguno en GitHub\n`;
     } else {
-      const estePercentil = percentiles[ githubNick ];
+      const estosDatos = percentiles[ githubNick ];
 
-      if (estePercentil === undefined) {
+      if (estosDatos === undefined) {
         mensaje =
         `⚠️ Parece que no he encontrado tu nick _${nick}_ en la lista\n` +
         "¿Es posible que te dieras de alta con otro?";
       } else {
         mensaje =
-          `🎓 El percentil de *${escapeLodash(nick)}*\n` +
-          ` es el *_${escapeDot(estePercentil * 100)}_* % ; es decir, sólo ese porcentaje ha alcanzado el mismo objetivo\n`;
+          `🎓 *${escapeLodash(nick)}* ha alcanzado el objetivo ${estosDatos["objetivo"]}\n` +
+          `como el *_${escapeDot(estosDatos["percentil"] * 100)}_* % de la clase\n` +
+          `y por tanto la nota por objetivos es ${escapeDot(estosDatos["nota"])} (sobre 7)\n`;
       }
     }
   }
