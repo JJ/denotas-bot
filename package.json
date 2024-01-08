@@ -1,0 +1,16 @@
+{
+  "name": "denotas-bot",
+  "version": "1.0.0",
+  "description": "Scripts to help with IV reviews and stuff",
+  "main": "scripts/get-reviews.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@octokit/rest": "^20.0.2"
+  },
+  "type": "module"
+
+}
