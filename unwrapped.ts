@@ -31,19 +31,19 @@ bot.on(UpdateType.Message, async ({ message }) => {
     const githubNick = nickMap.get(nick);
     if ( githubNick === undefined ) {
       mensaje =
-        `⚠️ Parece que tu nick _${nick}_no corresponde a ninguno en GitHub\n`;
+        `⚠️ Parece que tu nick _${escapeLodash(nick)}_no corresponde a ninguno en GitHub\n`;
     } else {
       const estosDatos = percentiles[ githubNick ];
 
       if (estosDatos === undefined) {
         mensaje =
-        `⚠️ Parece que no he encontrado tu nick _${nick}_ en la lista\n` +
+        `⚠️ Parece que no he encontrado tu nick _${escapeLodash(nick)}_ en la lista\n` +
         "¿Es posible que te dieras de alta con otro?";
       } else {
         mensaje =
-          `🎓 *${escapeLodash(nick)}* ha alcanzado el objetivo ${estosDatos["objetivo"]}\n` +
+          `🎓 *${escapeLodash(nick)}* ha alcanzado el objetivo ${estosDatos["objetivos"]}\n` +
           `como el *_${escapeDot(estosDatos["percentil"] * 100)}_* % de la clase\n` +
-          `y por tanto la nota por objetivos es ${escapeDot(estosDatos["nota"])} (sobre 7)\n`;
+          `y por tanto la nota por objetivos es ${escapeDot(estosDatos["nota"])} sobre 7\n`;
       }
     }
   }
