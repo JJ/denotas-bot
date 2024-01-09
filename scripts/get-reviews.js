@@ -4,6 +4,7 @@ import { Octokit } from "@octokit/rest";
 const octokit = new Octokit( { auth: process.env.IV_REVIEWERS_TOKEN } );
 
 const countReviews = {};
+const registerPRS = {};
 for ( const objetivo in [0,1,2,3,4,5,6,7,8,9] ) {
   const objetivoPath = path.join('..', 'IV-', 'proyectos', `objetivo-${objetivo}.md`);
   const objetivoContent = fs.readFileSync(objetivoPath, 'utf8');
@@ -26,12 +27,21 @@ for ( const objetivo in [0,1,2,3,4,5,6,7,8,9] ) {
           }
         );
         reviews.forEach(element => {
-            if ( ! (element.user.login in countReviews)) {
-                countReviews[element.user.login] = 1;
+          const reviewerLogin = element.user.login;
+          if ( reviewerLogin != owner) {
+            if ( ! (reviewerLogin in countReviews)) {
+              countReviews[reviewerLogin] = 1;
             } else {
-                countReviews[element.user.login] = countReviews[element.user.login] + 1;
+              countReviews[reviewerLogin] = countReviews[reviewerLogin] + 1;
             }
-            console.log(countReviews);
+            console.log(JSON.stringify(countReviews));
+            if (!(reviewerLogin in registerPRS)) {
+              registerPRS[reviewerLogin] = { [review]: true };
+            } else {
+              registerPRS[reviewerLogin][review] = true;
+            }
+            console.log(JSON.stringify(registerPRS));
+          }
         });
     });
 }
