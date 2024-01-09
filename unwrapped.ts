@@ -39,6 +39,7 @@ bot.on(UpdateType.Message, async ({ message }) => {
       const estosDatos = percentiles[ githubNick ];
       const reviewsEstudiante = reviews[ githubNick ];
       const reviewedPREstudiante = Object.keys(reviewedPRs[ githubNick ]).length;
+      const notaPRs = reviewsEstudiante > 14 ? 2 : reviewsEstudiante / 7;
       if (estosDatos === undefined) {
         mensaje =
         `⚠️ Parece que no he encontrado tu nick _${escapeLodash(nick)}_ en la lista\n` +
@@ -48,7 +49,8 @@ bot.on(UpdateType.Message, async ({ message }) => {
           `🎓 *${escapeLodash(nick)}* ha alcanzado el objetivo ${estosDatos["objetivos"]}\n` +
           `como el *_${escapeDot(estosDatos["percentil"] * 100)}_* % de la clase\n` +
           `y por tanto la nota por objetivos es ${escapeDot(estosDatos["nota"])} sobre 7\n` +
-          `también has hecho *${reviewsEstudiante}* reviews sobre *${reviewedPREstudiante}* PRs\n`;
+          `también has hecho *${reviewsEstudiante}* reviews sobre *${reviewedPREstudiante}* PRs lo que corresponde a una nota provisional de _${escapeDot(notaPRs.toFixed(2))}_\n` +
+          `y por tanto la nota provisional es _*${escapeDot((estosDatos["nota"] + notaPRs).toFixed(2))}*_ sobre 9\n`;
       }
     }
   }
