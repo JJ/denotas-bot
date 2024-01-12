@@ -15,7 +15,6 @@ const percentiles = JSON.parse( await Deno.readTextFile("../iv-percentiles.json"
 
 const nicks = await Deno.readTextFile(Deno.args[1] || "../equivalencia-telegram-github-23-24.csv");
 
-
 const lines = nicks.split("\n");
 lines.shift();
 const nickMap = new Map<string, string>();

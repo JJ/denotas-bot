@@ -34,13 +34,13 @@ for ( const objetivo in [0,1,2,3,4,5,6,7,8,9] ) {
             } else {
               countReviews[reviewerLogin] = countReviews[reviewerLogin] + 1;
             }
-            console.log(JSON.stringify(countReviews));
+            fs.writeFileSync("../reviews.json", JSON.stringify(countReviews));
             if (!(reviewerLogin in registerPRS)) {
               registerPRS[reviewerLogin] = { [review]: true };
             } else {
               registerPRS[reviewerLogin][review] = true;
             }
-            console.log(JSON.stringify(registerPRS));
+            fs.writeFileSync("../reviewed-prs.json", JSON.stringify(registerPRS));
           }
         });
     });
