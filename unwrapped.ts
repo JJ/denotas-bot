@@ -45,11 +45,22 @@ bot.on(UpdateType.Message, async ({ message }) => {
         "¿Es posible que te dieras de alta con otro?";
       } else {
         mensaje =
-          `🎓 *${escapeLodash(nick)}* ha alcanzado el objetivo ${estosDatos["objetivos"]}\n` +
-          `como el *_${escapeDot(estosDatos["percentil"] * 100)}_* % de la clase\n` +
-          `y por tanto la nota por objetivos es ${escapeDot(estosDatos["nota"])} sobre 7\n` +
-          `también has hecho *${reviewsEstudiante}* reviews sobre *${reviewedPREstudiante}* PRs lo que corresponde a una nota provisional de _${escapeDot(notaPRs.toFixed(2))}_\n` +
-          `y por tanto la nota provisional es _*${escapeDot((estosDatos["nota"] + notaPRs).toFixed(2))}*_ sobre 9\n`;
+          `🎓 *${escapeLodash(nick)}* ha alcanzado el objetivo ${
+            estosDatos["objetivos"]
+          }\n` +
+          `como el *_${escapeDot(
+            estosDatos["percentil"] * 100
+          )}_* % de la clase\n` +
+          `y por tanto la nota por objetivos es ${escapeDot(
+            estosDatos["nota"]
+          )} sobre 7\n` +
+          `también has hecho *${reviewsEstudiante}* reviews sobre *${reviewedPREstudiante}* PRs lo que corresponde a una nota provisional de _${escapeDot(
+            notaPRs.toFixed(2)
+          )}_\n` +
+          `y por tanto la nota provisional es _*${escapeDot(
+            (estosDatos["nota"] + notaPRs).toFixed(2)
+          )}*_ sobre 9\n` +
+          "Por favor, no te olvides de contestar [la encuesta](https://forms.gle/8oQrHrLk8HnCemsg8)";
       }
     }
   }
