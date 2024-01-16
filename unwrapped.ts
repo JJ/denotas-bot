@@ -3,6 +3,8 @@ import {
   UpdateType,
 } from "https://deno.land/x/telegram_bot_api/mod.ts";
 
+import { plot } from "https://deno.land/x/chart/mod.ts";
+
 const TOKEN = Deno.env.get("IV_UNWRAPPED_BOT_TOKEN");
 if (!TOKEN) throw new Error("Bot token is not provided");
 const bot = new TelegramBot(TOKEN);
@@ -12,6 +14,8 @@ const reviews = JSON.parse( await Deno.readTextFile( "../reviews.json"));
 const reviewedPRs = JSON.parse(await Deno.readTextFile("../reviewed-prs.json"));
 
 const percentiles = JSON.parse( await Deno.readTextFile("../iv-percentiles.json"));
+
+const PRs = JSON.parse( await Deno.readTextFile("../reviewers-per-pr.json"));
 
 const nicks = await Deno.readTextFile(Deno.args[1] || "../equivalencia-telegram-github-23-24.csv");
 
@@ -44,6 +48,11 @@ bot.on(UpdateType.Message, async ({ message }) => {
         `⚠️ Parece que no he encontrado tu nick _${escapeLodash(nick)}_ en la lista\n` +
         "¿Es posible que te dieras de alta con otro?";
       } else {
+        const reviewsPerPr = Object.values(PRs[ githubNick ]);
+        console.log(reviewsPerPr);
+        const PRchart = plot( reviewsPerPr );
+        console.log(PRchart);
+        const mediaRevsPRs = reviewsPerPr.reduce( (acc, current ) => { return acc + current } )/reviewsPerPr.length;
         mensaje =
           `🎯 *${escapeLodash(nick)}* ha alcanzado el objetivo ${
             estosDatos["objetivos"]
@@ -60,7 +69,12 @@ bot.on(UpdateType.Message, async ({ message }) => {
           `🗞 y por tanto la nota provisional es _*${escapeDot(
             (estosDatos["nota"] + notaPRs).toFixed(2)
           )}*_ sobre 9\n` +
-          "⚠️ Por favor, no te olvides de contestar [la encuesta](https://forms.gle/8oQrHrLk8HnCemsg8)";
+          "⚠️ Por favor, no te olvides de contestar [la encuesta](https://forms.gle/8oQrHrLk8HnCemsg8)\n" +
+          "*_Pull Requests_*\n" +
+          ` Media de revisiones por PR: ${escapeDot(
+            mediaRevsPRs.toFixed(2)
+          )} \n\n` +
+          `\`\`\`text\n${PRchart.replace(/\./g, "'")}\n\`\`\``;
       }
     }
   }

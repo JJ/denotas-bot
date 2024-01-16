@@ -2,6 +2,7 @@
   "version": "3",
   "redirects": {
     "https://deno.land/std/http/server.ts": "https://deno.land/std@0.175.0/http/server.ts",
+    "https://deno.land/x/chart/mod.ts": "https://deno.land/x/chart@1.1/mod.ts",
     "https://deno.land/x/telegram_bot_api/mod.ts": "https://deno.land/x/telegram_bot_api@0.4.0/mod.ts"
   },
   "remote": {
@@ -16,6 +17,7 @@
     "https://deno.land/std@0.175.0/async/retry.ts": "5efa3ba450ac0c07a40a82e2df296287b5013755d232049efd7ea2244f15b20f",
     "https://deno.land/std@0.175.0/async/tee.ts": "47e42d35f622650b02234d43803d0383a89eb4387e1b83b5a40106d18ae36757",
     "https://deno.land/std@0.175.0/http/server.ts": "cbb17b594651215ba95c01a395700684e569c165a567e4e04bba327f41197433",
+    "https://deno.land/x/chart@1.1/mod.ts": "47eb231735d6484d6f238dd04f8a6e359511abb546780fe1448cd0bdde426bee",
     "https://deno.land/x/telegram_bot_api@0.4.0/mod.ts": "18291c9e4f6b1be988b16554529f229cb709acc623083ffad24746b31a9426dd",
     "https://deno.land/x/telegram_bot_api@0.4.0/src/telegram-bot/run-params.ts": "d9084fa1c9390f3f72554e109973746261160cd7c5e75781f952c90299e7fba5",
     "https://deno.land/x/telegram_bot_api@0.4.0/src/telegram-bot/telegram-api.ts": "40567316b349e3999120638f108ad3be509d58eecf64aeed1d9f31c8624f239a",
