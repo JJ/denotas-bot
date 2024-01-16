@@ -4,6 +4,7 @@ import { Octokit } from "@octokit/rest";
 const octokit = new Octokit( { auth: process.env.IV_REVIEWERS_TOKEN } );
 
 const countReviews = {};
+const reviewsPerObjective = {};
 const registerPRS = {};
 for ( const objetivo in [0,1,2,3,4,5,6,7,8,9] ) {
   const objetivoPath = path.join('..', 'IV-', 'proyectos', `objetivo-${objetivo}.md`);
@@ -41,6 +42,19 @@ for ( const objetivo in [0,1,2,3,4,5,6,7,8,9] ) {
               registerPRS[reviewerLogin][review] = true;
             }
             fs.writeFileSync("../reviewed-prs.json", JSON.stringify(registerPRS));
+            if (!(owner in reviewsPerObjective)) {
+              reviewsPerObjective[owner] = { [objetivo]: 1};
+            } else {
+              if (!(objetivo in reviewsPerObjective[owner])) {
+                reviewsPerObjective[owner][objetivo] = 1;
+              } else {
+                reviewsPerObjective[owner][objetivo] = reviewsPerObjective[owner][objetivo] + 1;
+              }
+            }
+            fs.writeFileSync(
+              "../reviewers-per-pr.json",
+              JSON.stringify(reviewsPerObjective)
+            );
           }
         });
     });
