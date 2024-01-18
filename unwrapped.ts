@@ -10,6 +10,7 @@ if (!TOKEN) throw new Error("Bot token is not provided");
 const bot = new TelegramBot(TOKEN);
 
 const reviews = JSON.parse( await Deno.readTextFile( "../reviews.json"));
+const reviewsPerPR = JSON.parse( await Deno.readTextFile( "../reviewers-per-pr.json"));
 
 const reviewedPRs = JSON.parse(await Deno.readTextFile("../reviewed-prs.json"));
 
@@ -63,7 +64,13 @@ bot.on(UpdateType.Message, async ({ message }) => {
         const PRchart = plot( reviewsPerPr );
         console.log(PRchart);
         const mediaRevsPRs = reviewsPerPr.reduce( (acc, current ) => { return acc + current } )/reviewsPerPr.length;
+        const [notaPresentacion,notaExtra,notaProyecto, notaReviews, notaFinal] = notasMap.get( githubNick ) || [0,0,0,0,0];
         mensaje =
+          `🗞 La *_nota provisional_* es *_|| ${escapeDot(notaFinal)} ||_* \n`+
+          (notaPresentacion != 0 ?`📊 La nota de la presentación es ${escapeDot(notaPresentacion)}\n`:'') +
+          (notaExtra != 0 ?`📊 La nota extra por el hackatón es ${escapeDot(notaExtra)}\n`:"") +
+          `📊 La nota del proyecto es ${escapeDot(notaProyecto)}\n` +
+          `📊 La nota por las reviews es ${escapeDot(notaReviews)}\n` +
           `🎯 *${escapeLodash(nick)}* ha alcanzado el objetivo ${
             estosDatos["objetivos"]
           }\n` +
