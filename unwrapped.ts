@@ -17,8 +17,7 @@ const percentiles = JSON.parse( await Deno.readTextFile("../iv-percentiles.json"
 
 const PRs = JSON.parse( await Deno.readTextFile("../reviewers-per-pr.json"));
 
-const nicks = await Deno.readTextFile(Deno.args[1] || "../equivalencia-telegram-github-23-24.csv");
-
+const nicks = await Deno.readTextFile("../equivalencia-telegram-github-23-24.csv");
 const lines = nicks.split("\n");
 lines.shift();
 const nickMap = new Map<string, string>();
@@ -26,6 +25,17 @@ for (const line of lines) {
   const [_1, _2, github, telegram] = line.split(",");
   if (telegram && github) nickMap.set(telegram.toLowerCase(), github);
 }
+
+const notas = await Deno.readTextFile("../notas-23-24.tsv");
+const notasLines = notas.split("\n");
+notasLines.shift();
+const notasMap = new Map<string, number[]>();
+for (const line of notasLines) {
+  const [telegram, notaPresentacion,notaExtra,notaProyecto, notaReviews, notaFinal] = line.split("\t");
+  notasMap.set(telegram, [parseNotas(notaPresentacion), parseNotas(notaExtra), parseNotas(notaProyecto), parseFloat(notaReviews), parseFloat(notaFinal)]);
+}
+console.log(notasMap);
+
 bot.on(UpdateType.Message, async ({ message }) => {
   console.log(message);
   let mensaje: string;
@@ -96,4 +106,12 @@ function escapeLodash(nick: string ) {
 
 function escapeDot(nota: string | number) {
   return (nota + "").replace(".", "'");
+}
+
+function parseNotas( nota: string ) {
+  if ( nota === "" ) return 0;
+  console.log( nota );
+  const temp= parseFloat( nota.replace("\"", "").replace(",", "."));
+  console.log( temp );
+  return( temp)
 }
