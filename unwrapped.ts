@@ -22,7 +22,6 @@ notasLines.shift();
 const notasMap = new Map<string, number[]>();
 for (const line of notasLines) {
   const [telegram, notaPresentacion,notaExtra,notaProyecto, notaReviews, notaFinal] = line.split("\t");
-  console.warn(telegram);
   notasMap.set(telegram.toLowerCase(),
   [parseNotas(notaPresentacion),
     parseNotas(notaExtra),
@@ -30,8 +29,6 @@ for (const line of notasLines) {
     parseNotas(notaReviews),
     parseNotas(notaFinal)]);
 }
-console.log(notasMap);
-
 bot.on(UpdateType.Message, async ({ message }) => {
   console.log(message);
   let mensaje: string;
@@ -76,9 +73,6 @@ function escapeDot(nota: string | number) {
 }
 
 function parseNotas( nota: string ) {
-  console.warn( "Nota entrada: " + nota );
   if ( nota === "" || typeof  nota === "undefined") return 0;
-  const temp= parseFloat( nota.replace("\"", "").replace(",", "."));
-  console.log( "Nota salida", temp );
-  return( temp)
+  return   parseFloat( nota.replace("\"", "").replace(",", "."));
 }
